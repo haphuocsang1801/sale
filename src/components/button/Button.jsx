@@ -1,9 +1,13 @@
 import PropTypes from "prop-types";
+import { Link } from "react-router-dom";
+import classNames from "../../utils/classNames";
 const Button = ({
   type = "button",
   children,
   className,
   isLoading = false,
+  kind,
+  href = "#",
   ...rest
 }) => {
   const child = isLoading ? (
@@ -11,11 +15,35 @@ const Button = ({
   ) : (
     children
   );
+  let defaltBtnClassName =
+    "text-base font-semibold rounded-xl flex items-center justify-center min-h-[56px] ";
+  switch (kind) {
+    case "primary":
+      defaltBtnClassName = defaltBtnClassName + "bg-primary text-white";
+      break;
+    case "secondary":
+      defaltBtnClassName = defaltBtnClassName + "bg-secondary text-white";
+      break;
+    case "ghost":
+      defaltBtnClassName =
+        defaltBtnClassName + "bg-secondary bg-opacity-10 text-secondary";
+      break;
+    default:
+      break;
+  }
+  if (href)
+    return (
+      <Link to={href} className={classNames(defaltBtnClassName, className)}>
+        {child}
+      </Link>
+    );
   return (
     <button
-      className={`text-base font-semibold rounded-xl flex items-center justify-center text-white min-h-[56px] ${className} ${
+      className={classNames(
+        defaltBtnClassName,
+        className,
         isLoading ? "opacity-70 pointer-events-none" : ""
-      }`}
+      )}
       type={type}
       {...rest}
     >
@@ -24,10 +52,12 @@ const Button = ({
   );
 };
 Button.propTypes = {
-  type: PropTypes.string.isRequired,
+  type: PropTypes.string,
   children: PropTypes.node,
   isLoading: PropTypes.bool,
   className: PropTypes.string,
+  href: PropTypes.string,
+  kind: PropTypes.oneOf(["primary", "secondary", "ghost"]),
 };
 
 export default Button;

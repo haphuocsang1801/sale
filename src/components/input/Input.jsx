@@ -1,6 +1,7 @@
 import PropTypes from "prop-types";
 import { useController } from "react-hook-form";
 import { ErrorBoundary, withErrorBoundary } from "react-error-boundary";
+import classNames from "../../utils/classNames";
 const Input = (props) => {
   const {
     control,
@@ -20,9 +21,11 @@ const Input = (props) => {
     <div className="relative text-center">
       <input
         type={inputType || "text"}
-        className={`w-full py-4 px-6 border rounded-xl text-sm font-medium text-text1 bg-white dark:border-darkStroke dark:bg-transparent dark:text-white placeholder:text-text4 dark:placeholder:text-text2 transition-all ${
-          error ? "border-error" : "border-strock"
-        } ${children ? "pr-16" : ""}`}
+        className={classNames(
+          "w-full py-4 px-6 border rounded-xl text-sm font-medium text-text1 bg-white dark:border-darkStroke dark:bg-transparent dark:text-white placeholder:text-text4 dark:placeholder:text-text2 transition-all",
+          error ? "border-error" : "border-strock",
+          children ? "pr-16" : ""
+        )}
         placeholder={!error ? placeholder : ""}
         {...rest}
         {...field}

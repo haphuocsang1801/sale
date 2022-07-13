@@ -4,10 +4,19 @@
 
 @layer base {
   body {
-    @apply font-primary text-base font-normal;
+    @apply font-primary text-base font-normal mx-auto;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    max-width: 1440px;
   }
   input {
     @apply outline-none;
+  }
+  .sidebar-item {
+    @apply transition-all;
+  }
+  .sidebar-item.active {
+    @apply text-primary bg-primaryExtra2;
   }
 }
 input:focus + .input-error {
